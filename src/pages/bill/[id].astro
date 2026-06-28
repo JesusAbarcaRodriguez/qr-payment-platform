@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BillView from '../../components/bill/BillView';
+import { getTable } from '../../data/mock';
+
+export function getStaticPaths() {
+  return Array.from({ length: 100 }, (_, i) => ({
+    params: { id: String(i + 1) },
+  }));
+}
+
+const { id } = Astro.params;
+const table = getTable(id!);
+---
+<Layout titulo={`Bill — Table N°${table.number}`}>
+  <BillView table={table} />
+</Layout>
