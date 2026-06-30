@@ -43,10 +43,16 @@ export default function TipView({ total, tableId }: Props) {
           {selection === "none" && <div className="mb-8" />}
           <p className="text-gray-400 text-sm mb-8">Thank you for your visit 🙌</p>
           <a
-            href={`/table/${tableId}`}
-            className="block bg-brand text-white py-4 rounded-2xl font-semibold text-base"
+            href={`/feedback/${tableId}`}
+            className="block bg-brand text-white py-4 rounded-2xl font-semibold text-base mb-3"
           >
-            Back to table
+            Leave feedback
+          </a>
+          <a
+            href={`/table/${tableId}`}
+            className="block text-center text-sm text-gray-400 py-2"
+          >
+            Skip
           </a>
         </div>
       </div>

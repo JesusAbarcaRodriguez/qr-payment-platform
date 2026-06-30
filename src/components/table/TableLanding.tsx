@@ -55,7 +55,7 @@ export default function TableLanding({ table }: { table: TableData }) {
             icon={<FeedbackIcon />}
             title="Leave feedback"
             subtitle="Let us know how was your experience"
-            href="#feedback"
+            href={`/feedback/${table.id}`}
           />
         </div>
 

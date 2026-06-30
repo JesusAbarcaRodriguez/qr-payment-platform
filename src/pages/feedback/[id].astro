@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FeedbackView from '../../components/feedback/FeedbackView';
+
+export function getStaticPaths() {
+  return Array.from({ length: 100 }, (_, i) => ({
+    params: { id: String(i + 1) },
+  }));
+}
+
+const { id } = Astro.params;
+---
+<Layout titulo="Feedback">
+  <FeedbackView tableId={id!} client:load />
+</Layout>
