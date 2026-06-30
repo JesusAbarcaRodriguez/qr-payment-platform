@@ -1,0 +1,99 @@
+{
+  "common": {
+    "back": "Volver",
+    "skip": "Omitir",
+    "terms": "Términos de Servicio",
+    "terms_notice": "Al continuar, aceptas los",
+    "secure": "Los pagos están cifrados y son seguros"
+  },
+  "home": {
+    "title": "QR Payment",
+    "subtitle": "Escanea el código QR de tu mesa para comenzar",
+    "demo_label": "Demo rápida",
+    "link_landing": "Mesa N°26 — Inicio",
+    "link_bill": "Mesa N°26 — Cuenta",
+    "link_tip": "Mesa N°26 — Propina",
+    "start": "Iniciar demo completa →"
+  },
+  "table": {
+    "number": "Mesa N°{{number}}",
+    "made_with": "Hecho con ❤️ por QR Payment Platform",
+    "menu_title": "Ver el menú",
+    "menu_sub": "Toca para ver el menú",
+    "bill_title": "Pagar tu cuenta",
+    "bill_sub": "Revisa y paga sin complicaciones",
+    "feedback_title": "Dejar comentario",
+    "feedback_sub": "Cuéntanos cómo fue tu experiencia"
+  },
+  "bill": {
+    "heading": "Mesa N°{{number}}",
+    "label": "Mesa N°{{number}}",
+    "total": "Total de cuenta",
+    "split": "Para dividir la cuenta, pide al mesero",
+    "pay": "Pagar la cuenta"
+  },
+  "tip": {
+    "title": "¿Cuánto deseas dejar de propina?",
+    "custom": "Monto personalizado",
+    "custom_label": "Monto personalizado",
+    "none": "Sin propina",
+    "continue": "Continuar — ${{total}}",
+    "select": "Selecciona una opción"
+  },
+  "payment": {
+    "title": "Elige el método de pago",
+    "total_label": "Total a pagar:",
+    "pay": "Pagar ${{total}}",
+    "select": "Selecciona un método de pago",
+    "methods": {
+      "apple_pay": "Apple Pay",
+      "google_pay": "Google Pay",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "paypal": "PayPal"
+    }
+  },
+  "processing": {
+    "title": "Procesando pago",
+    "steps": [
+      "Conectando al banco...",
+      "Verificando detalles...",
+      "Autorizando el pago...",
+      "Casi listo..."
+    ]
+  },
+  "success": {
+    "title": "¡Pago realizado!",
+    "total_label": "Total pagado",
+    "tip_label": "Incluye ${{tip}} de propina — ¡gracias! 🙏",
+    "thanks": "Gracias por tu visita 🙌",
+    "feedback": "Dejar comentario",
+    "back": "Omitir"
+  },
+  "feedback": {
+    "title": "Dejar comentario",
+    "subtitle": "¿Cómo fue tu experiencia en la Mesa N°{{id}}?",
+    "rate_label": "Califica tu experiencia",
+    "comment_label": "Comentario (opcional)",
+    "placeholder": "Cuéntanos qué te gustó o qué podemos mejorar...",
+    "submit": "Enviar comentario",
+    "select_first": "Selecciona una calificación primero",
+    "done_title": "¡Gracias por tu comentario!",
+    "done_sub": "Tu opinión nos ayuda a mejorar la experiencia.",
+    "done_back": "Volver a la mesa",
+    "ratings": {
+      "1": "Muy malo",
+      "2": "Malo",
+      "3": "Regular",
+      "4": "Bueno",
+      "5": "¡Excelente!"
+    }
+  },
+  "menu": {
+    "title": "Menú",
+    "starters": "Entradas",
+    "mains": "Platos fuertes",
+    "drinks": "Bebidas",
+    "desserts": "Postres"
+  }
+}

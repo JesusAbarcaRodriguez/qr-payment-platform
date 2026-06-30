@@ -1,4 +1,6 @@
+import "../../i18n/config";
 import { useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import TipOption from "./TipOption";
 import PaymentMethods, { type PaymentMethodId } from "../payment/PaymentMethods";
 import ProcessingScreen from "../payment/ProcessingScreen";
@@ -13,6 +15,7 @@ interface Props {
 }
 
 export default function TipView({ total, tableId }: Props) {
+  const { t } = useTranslation();
   const [stage, setStage] = useState<Stage>("tip");
   const [selection, setSelection] = useState<TipSelection | null>(null);
   const [customAmount, setCustomAmount] = useState("");
@@ -32,17 +35,10 @@ export default function TipView({ total, tableId }: Props) {
 
   const onProcessingComplete = useCallback(() => setStage("done"), []);
 
-  // ── Stage: processing ──────────────────────────────────────────────────────
-  if (stage === "processing") {
-    return <ProcessingScreen total={grandTotal} onComplete={onProcessingComplete} />;
-  }
+  if (stage === "processing") return <ProcessingScreen total={grandTotal} onComplete={onProcessingComplete} />;
+  if (stage === "done") return <SuccessScreen total={grandTotal} tip={tipAmount()} tableId={tableId} />;
 
-  // ── Stage: done ────────────────────────────────────────────────────────────
-  if (stage === "done") {
-    return <SuccessScreen total={grandTotal} tip={tipAmount()} tableId={tableId} />;
-  }
-
-  // ── Stage: payment ─────────────────────────────────────────────────────────
+  // ── Payment method stage ───────────────────────────────────────────────────
   if (stage === "payment") {
     return (
       <div className="min-h-screen bg-background px-6 py-10">
@@ -55,9 +51,9 @@ export default function TipView({ total, tableId }: Props) {
             </button>
           </div>
 
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Choose payment method</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">{t("payment.title")}</h1>
           <p className="text-gray-400 text-sm mb-8">
-            Total to pay:{" "}
+            {t("payment.total_label")}{" "}
             <span className="font-bold text-gray-900">${grandTotal}</span>
           </p>
 
@@ -68,12 +64,10 @@ export default function TipView({ total, tableId }: Props) {
               onClick={() => paymentMethod && setStage("processing")}
               disabled={!paymentMethod}
               className={`w-full py-4 rounded-2xl font-semibold text-base transition-all ${
-                paymentMethod
-                  ? "bg-brand text-white"
-                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                paymentMethod ? "bg-brand text-white" : "bg-gray-200 text-gray-400 cursor-not-allowed"
               }`}
             >
-              {paymentMethod ? `Pay $${grandTotal}` : "Select a payment method"}
+              {paymentMethod ? t("payment.pay", { total: grandTotal }) : t("payment.select")}
             </button>
 
             <p className="text-center text-xs text-gray-300 mt-4 flex items-center justify-center gap-1.5">
@@ -81,7 +75,7 @@ export default function TipView({ total, tableId }: Props) {
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
               </svg>
-              Payments are encrypted and secure
+              {t("common.secure")}
             </p>
           </div>
         </div>
@@ -89,7 +83,7 @@ export default function TipView({ total, tableId }: Props) {
     );
   }
 
-  // ── Stage: tip ─────────────────────────────────────────────────────────────
+  // ── Tip stage ──────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-background px-6 py-10">
       <div className="w-full max-w-sm mx-auto">
@@ -101,25 +95,17 @@ export default function TipView({ total, tableId }: Props) {
           </a>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 mb-8 leading-snug">
-          How much would you like to tip?
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-8 leading-snug">{t("tip.title")}</h1>
 
         <div className="flex gap-3 mb-6">
           {([10, 15, 20] as const).map((pct) => (
-            <TipOption
-              key={pct}
-              amount={calculate(pct)}
-              percentage={pct}
-              selected={selection === pct}
-              onSelect={() => setSelection(pct)}
-            />
+            <TipOption key={pct} amount={calculate(pct)} percentage={pct} selected={selection === pct} onSelect={() => setSelection(pct)} />
           ))}
         </div>
 
         {selection === "custom" && (
           <div className="bg-white rounded-2xl p-4 mb-4 border-2 border-brand">
-            <label className="text-xs text-gray-400 mb-2 block">Custom amount</label>
+            <label className="text-xs text-gray-400 mb-2 block">{t("tip.custom_label")}</label>
             <div className="flex items-center gap-1">
               <span className="text-gray-400 font-medium">$</span>
               <input
@@ -135,37 +121,25 @@ export default function TipView({ total, tableId }: Props) {
         )}
 
         <div className="space-y-1 mb-8">
-          <button
-            onClick={() => setSelection("custom")}
-            className={`w-full py-3 text-sm font-medium rounded-xl transition-colors text-center ${
-              selection === "custom" ? "text-brand bg-brand-light" : "text-gray-500"
-            }`}
-          >
-            Custom amount
+          <button onClick={() => setSelection("custom")} className={`w-full py-3 text-sm font-medium rounded-xl transition-colors text-center ${selection === "custom" ? "text-brand bg-brand-light" : "text-gray-500"}`}>
+            {t("tip.custom")}
           </button>
-          <button
-            onClick={() => setSelection("none")}
-            className={`w-full py-3 text-sm font-medium rounded-xl transition-colors text-center ${
-              selection === "none" ? "text-brand bg-brand-light" : "text-gray-500"
-            }`}
-          >
-            No tip
+          <button onClick={() => setSelection("none")} className={`w-full py-3 text-sm font-medium rounded-xl transition-colors text-center ${selection === "none" ? "text-brand bg-brand-light" : "text-gray-500"}`}>
+            {t("tip.none")}
           </button>
         </div>
 
         <p className="text-center text-xs text-gray-400 mb-6">
-          By continuing, you accept the{" "}
-          <span className="underline cursor-pointer">Terms of Service</span>
+          {t("common.terms_notice")}{" "}
+          <span className="underline cursor-pointer">{t("common.terms")}</span>
         </p>
 
         <button
           onClick={() => tipReady && setStage("payment")}
           disabled={!tipReady}
-          className={`w-full py-4 rounded-2xl font-semibold text-base transition-all ${
-            tipReady ? "bg-brand text-white" : "bg-gray-200 text-gray-400 cursor-not-allowed"
-          }`}
+          className={`w-full py-4 rounded-2xl font-semibold text-base transition-all ${tipReady ? "bg-brand text-white" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}
         >
-          {tipReady ? `Continue — $${grandTotal}` : "Select an option"}
+          {tipReady ? t("tip.continue", { total: grandTotal }) : t("tip.select")}
         </button>
       </div>
     </div>

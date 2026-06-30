@@ -1,0 +1,99 @@
+{
+  "common": {
+    "back": "Back",
+    "skip": "Skip",
+    "terms": "Terms of Service",
+    "terms_notice": "By continuing, you accept the",
+    "secure": "Payments are encrypted and secure"
+  },
+  "home": {
+    "title": "QR Payment",
+    "subtitle": "Scan the QR code at your table to get started",
+    "demo_label": "Quick demo",
+    "link_landing": "Table N°26 — Landing",
+    "link_bill": "Table N°26 — Bill",
+    "link_tip": "Table N°26 — Tip",
+    "start": "Start full demo →"
+  },
+  "table": {
+    "number": "Table N°{{number}}",
+    "made_with": "Made with ❤️ by QR Payment Platform",
+    "menu_title": "View the menu",
+    "menu_sub": "Tap to see the menu",
+    "bill_title": "Pay your bill",
+    "bill_sub": "Check and pay effortlessly",
+    "feedback_title": "Leave feedback",
+    "feedback_sub": "Let us know how was your experience"
+  },
+  "bill": {
+    "heading": "Table N°{{number}}",
+    "label": "Table N°{{number}}",
+    "total": "Bill total",
+    "split": "To split the bill, please ask the waiter",
+    "pay": "Pay the bill"
+  },
+  "tip": {
+    "title": "How much would you like to tip?",
+    "custom": "Custom amount",
+    "custom_label": "Custom amount",
+    "none": "No tip",
+    "continue": "Continue — ${{total}}",
+    "select": "Select an option"
+  },
+  "payment": {
+    "title": "Choose payment method",
+    "total_label": "Total to pay:",
+    "pay": "Pay ${{total}}",
+    "select": "Select a payment method",
+    "methods": {
+      "apple_pay": "Apple Pay",
+      "google_pay": "Google Pay",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "paypal": "PayPal"
+    }
+  },
+  "processing": {
+    "title": "Processing payment",
+    "steps": [
+      "Connecting to bank...",
+      "Verifying details...",
+      "Authorizing payment...",
+      "Almost done..."
+    ]
+  },
+  "success": {
+    "title": "Payment complete!",
+    "total_label": "Total paid",
+    "tip_label": "Includes ${{tip}} tip — thank you! 🙏",
+    "thanks": "Thank you for your visit 🙌",
+    "feedback": "Leave feedback",
+    "back": "Skip"
+  },
+  "feedback": {
+    "title": "Leave feedback",
+    "subtitle": "How was your experience at Table N°{{id}}?",
+    "rate_label": "Rate your experience",
+    "comment_label": "Comment (optional)",
+    "placeholder": "Tell us what you liked or what we can improve...",
+    "submit": "Submit feedback",
+    "select_first": "Select a rating first",
+    "done_title": "Thanks for your feedback!",
+    "done_sub": "Your opinion helps us improve the experience.",
+    "done_back": "Back to table",
+    "ratings": {
+      "1": "Very bad",
+      "2": "Bad",
+      "3": "OK",
+      "4": "Good",
+      "5": "Excellent!"
+    }
+  },
+  "menu": {
+    "title": "Menu",
+    "starters": "Starters",
+    "mains": "Mains",
+    "drinks": "Drinks",
+    "desserts": "Desserts"
+  }
+}

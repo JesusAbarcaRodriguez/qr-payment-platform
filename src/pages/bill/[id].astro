@@ -13,5 +13,5 @@ const { id } = Astro.params;
 const table = getTable(id!);
 ---
 <Layout titulo={`Bill — Table N°${table.number}`}>
-  <BillView table={table} />
+  <BillView table={table} client:load />
 </Layout>

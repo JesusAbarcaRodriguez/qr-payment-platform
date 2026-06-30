@@ -1,3 +1,5 @@
+import "../../i18n/config";
+import { useTranslation } from "react-i18next";
 import ActionCard from "./ActionCard";
 import type { TableData } from "../../types";
 
@@ -23,45 +25,26 @@ const FeedbackIcon = () => (
 );
 
 export default function TableLanding({ table }: { table: TableData }) {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 py-12">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm border border-gray-100">
-            <span className="text-2xl font-bold text-gray-500 tracking-wide">
-              {table.restaurant.logoText}
-            </span>
+            <span className="text-2xl font-bold text-gray-500 tracking-wide">{table.restaurant.logoText}</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-            {table.restaurant.name}
-          </h1>
-          <p className="text-gray-400 text-sm mt-1.5">Table N°{table.number}</p>
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">{table.restaurant.name}</h1>
+          <p className="text-gray-400 text-sm mt-1.5">{t("table.number", { number: table.number })}</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm px-5 mb-8">
-          <ActionCard
-            icon={<MenuIcon />}
-            title="View the menu"
-            subtitle="Tap to see the menu"
-            href={`/menu/${table.id}`}
-          />
-          <ActionCard
-            icon={<PayIcon />}
-            title="Pay your bill"
-            subtitle="Check and pay effortlessly"
-            href={`/bill/${table.id}`}
-          />
-          <ActionCard
-            icon={<FeedbackIcon />}
-            title="Leave feedback"
-            subtitle="Let us know how was your experience"
-            href={`/feedback/${table.id}`}
-          />
+          <ActionCard icon={<MenuIcon />} title={t("table.menu_title")} subtitle={t("table.menu_sub")} href={`/menu/${table.id}`} />
+          <ActionCard icon={<PayIcon />} title={t("table.bill_title")} subtitle={t("table.bill_sub")} href={`/bill/${table.id}`} />
+          <ActionCard icon={<FeedbackIcon />} title={t("table.feedback_title")} subtitle={t("table.feedback_sub")} href={`/feedback/${table.id}`} />
         </div>
 
-        <p className="text-center text-xs text-gray-300">
-          Made with ❤️ by QR Payment Platform
-        </p>
+        <p className="text-center text-xs text-gray-300">{t("table.made_with")}</p>
       </div>
     </div>
   );

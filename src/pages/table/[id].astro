@@ -13,5 +13,5 @@ const { id } = Astro.params;
 const table = getTable(id!);
 ---
 <Layout titulo={`Table N°${table.number}`}>
-  <TableLanding table={table} />
+  <TableLanding table={table} client:load />
 </Layout>
