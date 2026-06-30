@@ -1,8 +1,10 @@
 import type { TableData } from "../types";
 
 const DEMO_ITEMS = [
-  { id: "1", name: "French fries with cheese sauce", quantity: 1, price: 145 },
-  { id: "2", name: "Summer wine 0.3", quantity: 2, price: 310 },
+  { id: "1", name: "Casado con pollo", quantity: 1, price: 6500 },
+  { id: "2", name: "Chifrijo", quantity: 2, price: 10400 },
+  { id: "3", name: "Fresco de cas", quantity: 2, price: 3600 },
+  { id: "4", name: "Patacones con guacamole", quantity: 1, price: 3500 },
 ];
 
 export function getTable(id: string): TableData {
@@ -13,8 +15,8 @@ export function getTable(id: string): TableData {
     id,
     number,
     restaurant: {
-      name: "My Restaurant",
-      logoText: "MR",
+      name: "Soda La Tica",
+      logoText: "SLT",
     },
     bill: {
       items: DEMO_ITEMS,
