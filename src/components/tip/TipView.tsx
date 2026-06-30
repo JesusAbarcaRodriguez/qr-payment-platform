@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import TipOption from "./TipOption";
+import PaymentMethods, { type PaymentMethodId } from "../payment/PaymentMethods";
+import ProcessingScreen from "../payment/ProcessingScreen";
+import SuccessScreen from "../payment/SuccessScreen";
 
+type Stage = "tip" | "payment" | "processing" | "done";
 type TipSelection = 10 | 15 | 20 | "custom" | "none";
 
 interface Props {
@@ -9,9 +13,10 @@ interface Props {
 }
 
 export default function TipView({ total, tableId }: Props) {
+  const [stage, setStage] = useState<Stage>("tip");
   const [selection, setSelection] = useState<TipSelection | null>(null);
   const [customAmount, setCustomAmount] = useState("");
-  const [paid, setPaid] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodId | null>(null);
 
   const calculate = (pct: number) => Math.round((total * pct) / 100);
 
@@ -23,42 +28,68 @@ export default function TipView({ total, tableId }: Props) {
   };
 
   const grandTotal = total + tipAmount();
-  const ready = selection !== null;
+  const tipReady = selection !== null;
 
-  if (paid) {
+  const onProcessingComplete = useCallback(() => setStage("done"), []);
+
+  // ── Stage: processing ──────────────────────────────────────────────────────
+  if (stage === "processing") {
+    return <ProcessingScreen total={grandTotal} onComplete={onProcessingComplete} />;
+  }
+
+  // ── Stage: done ────────────────────────────────────────────────────────────
+  if (stage === "done") {
+    return <SuccessScreen total={grandTotal} tip={tipAmount()} tableId={tableId} />;
+  }
+
+  // ── Stage: payment ─────────────────────────────────────────────────────────
+  if (stage === "payment") {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
-        <div className="w-full max-w-sm text-center">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+      <div className="min-h-screen bg-background px-6 py-10">
+        <div className="w-full max-w-sm mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <button onClick={() => setStage("tip")} className="text-gray-500 p-1 -ml-1">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M5 12l7-7M5 12l7 7" />
+              </svg>
+            </button>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Payment complete!</h2>
-          <p className="text-gray-400 text-sm mb-1">Total paid</p>
-          <p className="text-4xl font-bold text-gray-900 mb-2">${grandTotal}</p>
-          {selection !== "none" && (
-            <p className="text-gray-400 text-xs mb-8">Includes ${tipAmount()} tip</p>
-          )}
-          {selection === "none" && <div className="mb-8" />}
-          <p className="text-gray-400 text-sm mb-8">Thank you for your visit 🙌</p>
-          <a
-            href={`/feedback/${tableId}`}
-            className="block bg-brand text-white py-4 rounded-2xl font-semibold text-base mb-3"
-          >
-            Leave feedback
-          </a>
-          <a
-            href={`/table/${tableId}`}
-            className="block text-center text-sm text-gray-400 py-2"
-          >
-            Skip
-          </a>
+
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">Choose payment method</h1>
+          <p className="text-gray-400 text-sm mb-8">
+            Total to pay:{" "}
+            <span className="font-bold text-gray-900">${grandTotal}</span>
+          </p>
+
+          <PaymentMethods selected={paymentMethod} onSelect={setPaymentMethod} />
+
+          <div className="mt-8">
+            <button
+              onClick={() => paymentMethod && setStage("processing")}
+              disabled={!paymentMethod}
+              className={`w-full py-4 rounded-2xl font-semibold text-base transition-all ${
+                paymentMethod
+                  ? "bg-brand text-white"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              }`}
+            >
+              {paymentMethod ? `Pay $${grandTotal}` : "Select a payment method"}
+            </button>
+
+            <p className="text-center text-xs text-gray-300 mt-4 flex items-center justify-center gap-1.5">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              Payments are encrypted and secure
+            </p>
+          </div>
         </div>
       </div>
     );
   }
 
+  // ── Stage: tip ─────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-background px-6 py-10">
       <div className="w-full max-w-sm mx-auto">
@@ -128,13 +159,13 @@ export default function TipView({ total, tableId }: Props) {
         </p>
 
         <button
-          onClick={() => ready && setPaid(true)}
-          disabled={!ready}
+          onClick={() => tipReady && setStage("payment")}
+          disabled={!tipReady}
           className={`w-full py-4 rounded-2xl font-semibold text-base transition-all ${
-            ready ? "bg-brand text-white" : "bg-gray-200 text-gray-400 cursor-not-allowed"
+            tipReady ? "bg-brand text-white" : "bg-gray-200 text-gray-400 cursor-not-allowed"
           }`}
         >
-          {ready ? `Pay $${grandTotal}` : "Select an option"}
+          {tipReady ? `Continue — $${grandTotal}` : "Select an option"}
         </button>
       </div>
     </div>
