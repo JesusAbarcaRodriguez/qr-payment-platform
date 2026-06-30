@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MenuView from '../../components/menu/MenuView';
+
+export function getStaticPaths() {
+  return Array.from({ length: 100 }, (_, i) => ({
+    params: { id: String(i + 1) },
+  }));
+}
+
+const { id } = Astro.params;
+---
+<Layout titulo="Menu">
+  <MenuView tableId={id!} client:load />
+</Layout>

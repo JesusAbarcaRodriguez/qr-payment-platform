@@ -43,7 +43,7 @@ export default function TableLanding({ table }: { table: TableData }) {
             icon={<MenuIcon />}
             title="View the menu"
             subtitle="Tap to see the menu"
-            href="#menu"
+            href={`/menu/${table.id}`}
           />
           <ActionCard
             icon={<PayIcon />}
